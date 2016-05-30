@@ -8,7 +8,6 @@ package org.martin.proyectoCopaAmerica.data;
 import bd.Conexion;
 import bd.Query;
 import java.util.LinkedList;
-import java.util.List;
 import org.martin.proyectoCopaAmerica.model.Partido;
 import org.martin.proyectoCopaAmerica.model.Seleccion;
 
@@ -23,7 +22,7 @@ public class Database {
     static{
         
         if (con == null) {
-            con = new Conexion("dbCopaAmerica");
+            con = new Conexion("prueba", Conexion.SQLSERVER);
             Query.conexion = con;
         }
     }
@@ -49,7 +48,5 @@ public class Database {
     public static void addSeleccion(Seleccion s){
         
     }
-    
-    public static 
     
 }

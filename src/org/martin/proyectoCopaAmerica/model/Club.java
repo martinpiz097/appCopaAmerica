@@ -10,5 +10,42 @@ package org.martin.proyectoCopaAmerica.model;
  * @author martin
  */
 public class Club {
+    private int id;
+    private String nombre;
+    private String paisDeOrigen;
+
+    public Club(int id, String nombre, String paisDeOrigen) {
+        this.id = id;
+        this.nombre = nombre;
+        this.paisDeOrigen = paisDeOrigen;
+    }
+
+    public Club() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getPaisDeOrigen() {
+        return paisDeOrigen;
+    }
+
+    public void setPaisDeOrigen(String paisDeOrigen) {
+        this.paisDeOrigen = paisDeOrigen;
+    }
+    
     
 }
