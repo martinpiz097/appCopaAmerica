@@ -7,15 +7,12 @@ package org.martin.proyectoCopaAmerica.data;
 
 import bd.Conexion;
 import bd.Query;
-import java.io.IOException;
-import java.net.Socket;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.martin.proyectoCopaAmerica.model.Administrador;
+import java.util.LinkedList;
 import org.martin.proyectoCopaAmerica.model.Partido;
 import org.martin.proyectoCopaAmerica.model.Seleccion;
 
@@ -71,6 +68,10 @@ public class Database {
         Administrador resultado;
         ResultSet res = Query.select("administrador", "nick = '" + nick + "'", "nick", "clave");
         return resultado = new Administrador(res.getString(1), res.getString(2));
+//        if (con == null) {
+//            // con = new Conexion("prueba", Conexion.);
+//            Query.conexion = con;
+//        }
     }
     
     public static void addPartido(Partido p){
@@ -108,4 +109,5 @@ public class Database {
         
         return selecciones;
     }
+
 }
