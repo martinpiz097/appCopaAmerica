@@ -10,7 +10,6 @@ package org.martin.proyectoCopaAmerica.model;
  * @author martin
  */
 public class Club {
-<<<<<<< HEAD
 =======
     private int id;
     private String nombre;

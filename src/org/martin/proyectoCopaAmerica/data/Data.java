@@ -1,7 +1,8 @@
 
 package org.martin.proyectoCopaAmerica.data;
 
-import bd.*;
+import bd.Conexion;
+import bd.Query;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.martin.proyectoCopaAmerica.model.Club;
@@ -30,7 +31,6 @@ public class Data {
     
     public void insertarClub(Club c){
             //Insertar Club
-        
          Query.insert("club",c.getNombre(),c.getPaisDeOrigen());
     }
     
