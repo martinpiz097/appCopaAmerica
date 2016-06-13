@@ -10,22 +10,24 @@ package org.martin.proyectoCopaAmerica.model;
  * @author LAB-315
  */
 public class Rol {
-    private int id;
+   
+    private byte id;
     private String nombre;
 
-    public Rol(int id, String nombre) {
+    public Rol(byte id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
 
-    public Rol() {
+    public Rol(String nombre) {
+        this.nombre = nombre;
     }
 
-    public int getId() {
+    public byte getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(byte id) {
         this.id = id;
     }
 
@@ -36,5 +38,6 @@ public class Rol {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
     
 }

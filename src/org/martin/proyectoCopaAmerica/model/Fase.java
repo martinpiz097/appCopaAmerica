@@ -10,22 +10,24 @@ package org.martin.proyectoCopaAmerica.model;
  * @author LAB-315
  */
 public class Fase {
-    private int id;
+
+    private byte id;
     private String nombre;
 
-    public Fase(int id, String nombre) {
+    public Fase(byte id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
 
-    public Fase() {
+    public Fase(String nombre) {
+        this.nombre = nombre;
     }
 
-    public int getId() {
+    public byte getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(byte id) {
         this.id = id;
     }
 

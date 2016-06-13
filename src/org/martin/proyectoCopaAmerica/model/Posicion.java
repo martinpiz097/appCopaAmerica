@@ -10,22 +10,24 @@ package org.martin.proyectoCopaAmerica.model;
  * @author LAB-315
  */
 public class Posicion {
-    private int id;
+    
+    private byte id;
     private String nombre;
 
-    public Posicion(int id, String nombre) {
+    public Posicion(byte id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
 
-    public Posicion() {
+    public Posicion(String nombre) {
+        this.nombre = nombre;
     }
 
-    public int getId() {
+    public byte getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(byte id) {
         this.id = id;
     }
 
@@ -36,6 +38,6 @@ public class Posicion {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
+
     
 }

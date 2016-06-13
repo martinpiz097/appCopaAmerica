@@ -10,32 +10,32 @@ package org.martin.proyectoCopaAmerica.model;
  * @author LAB-315
  */
 public class Estadio {
-    private int id;
-    private String estadio;
+    private byte id;
+    private String nombre;
 
-    public Estadio(int id, String estadio) {
+    public Estadio(byte id, String nombre) {
         this.id = id;
-        this.estadio = estadio;
+        this.nombre = nombre;
     }
 
-    public Estadio() {
+    public Estadio(String nombre) {
+        this.nombre = nombre;
     }
 
-    public int getId() {
+    public byte getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(byte id) {
         this.id = id;
     }
 
-    public String getEstadio() {
-        return estadio;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setEstadio(String estadio) {
-        this.estadio = estadio;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
-    
     
 }

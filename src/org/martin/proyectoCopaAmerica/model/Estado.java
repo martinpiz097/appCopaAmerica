@@ -10,22 +10,23 @@ package org.martin.proyectoCopaAmerica.model;
  * @author LAB-315
  */
 public class Estado {
-    private int id;
+    private byte id;
     private String nombre;
 
-    public Estado(int id, String nombre) {
+    public Estado(byte id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
 
-    public Estado() {
+    public Estado(String nombre) {
+        this.nombre = nombre;
     }
 
-    public int getId() {
+    public byte getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(byte id) {
         this.id = id;
     }
 
@@ -36,6 +37,6 @@ public class Estado {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
+
     
 }

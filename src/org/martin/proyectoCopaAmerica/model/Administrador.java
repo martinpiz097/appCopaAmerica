@@ -12,18 +12,18 @@ package org.martin.proyectoCopaAmerica.model;
 public class Administrador {
 
     private byte id;
-    private String nick;
-    private String password;
+    private String usuario;
+    private String clave;
 
-    public Administrador(byte id, String nick, String password) {
+    public Administrador(byte id, String usuario, String clave) {
         this.id = id;
-        this.nick = nick;
-        this.password = password;
+        this.usuario = usuario;
+        this.clave = clave;
     }
 
-    public Administrador(String nick, String password) {
-        this.nick = nick;
-        this.password = password;
+    public Administrador(String usuario, String clave) {
+        this.usuario = usuario;
+        this.clave = clave;
     }
 
     public byte getId() {
@@ -34,19 +34,20 @@ public class Administrador {
         this.id = id;
     }
 
-    public String getNick() {
-        return nick;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setNick(String nick) {
-        this.nick = nick;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
-    public String getPassword() {
-        return password;
+    public String getClave() {
+        return clave;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setClave(String clave) {
+        this.clave = clave;
     }
+    
 }

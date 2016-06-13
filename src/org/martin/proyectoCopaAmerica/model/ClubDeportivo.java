@@ -9,26 +9,25 @@ package org.martin.proyectoCopaAmerica.model;
  *
  * @author martin
  */
-public class Club {
-=======
-    private int id;
-    private String nombre;
-    private String paisDeOrigen;
+public class ClubDeportivo {
 
-    public Club(int id, String nombre, String paisDeOrigen) {
+    private byte id;
+    private String nombre;
+
+    public ClubDeportivo(byte id, String nombre) {
         this.id = id;
         this.nombre = nombre;
-        this.paisDeOrigen = paisDeOrigen;
     }
 
-    public Club() {
+    public ClubDeportivo(String nombre) {
+        this.nombre = nombre;
     }
 
-    public int getId() {
+    public byte getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(byte id) {
         this.id = id;
     }
 
@@ -39,15 +38,4 @@ public class Club {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-    public String getPaisDeOrigen() {
-        return paisDeOrigen;
-    }
-
-    public void setPaisDeOrigen(String paisDeOrigen) {
-        this.paisDeOrigen = paisDeOrigen;
-    }
-    
->>>>>>> 003e3ad9755eb83d4fd206aadb5f7b01b704cc57
-    
 }

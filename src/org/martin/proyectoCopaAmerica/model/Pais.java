@@ -9,25 +9,25 @@ package org.martin.proyectoCopaAmerica.model;
  *
  * @author martin
  */
-public class Perfil {
-<<<<<<< HEAD
-=======
-    private int id;
+public class Pais {
+    
+    private byte id;
     private String nombre;
 
-    public Perfil(int id, String nombre) {
+    public Pais(byte id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
 
-    public Perfil() {
+    public Pais(String nombre) {
+        this.nombre = nombre;
     }
 
-    public int getId() {
+    public byte getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(byte id) {
         this.id = id;
     }
 
@@ -39,6 +39,5 @@ public class Perfil {
         this.nombre = nombre;
     }
     
->>>>>>> 003e3ad9755eb83d4fd206aadb5f7b01b704cc57
     
 }
