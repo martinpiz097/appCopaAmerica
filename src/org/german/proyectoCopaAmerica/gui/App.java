@@ -5,9 +5,13 @@
  */
 package org.german.proyectoCopaAmerica.gui;
 
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.UnsupportedLookAndFeelException;
+import org.martin.proyectoCopaAmerica.data.Database;
+import org.martin.proyectoCopaAmerica.model.Administrador;
 
 /**
  *
@@ -123,7 +127,19 @@ public class App extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bttnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttnEnviarActionPerformed
-        abrirVentana();
+       
+        try {
+            String user = txtUsuario.getText();
+            String password = pPass.getText();
+            Administrador posible = new Administrador(user, password);
+            boolean loginValido = Database.loginValido(posible);
+            
+            if (loginValido) abrirVentana();
+            
+            else JOptionPane.showMessageDialog(this, "Usuario y/o contraseña incorrectos");
+        } catch (SQLException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_bttnEnviarActionPerformed
 
     /**

@@ -13,6 +13,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.martin.proyectoCopaAmerica.model.Administrador;
 import java.util.LinkedList;
+import org.martin.proyectoCopaAmerica.model.Arbitro;
+import org.martin.proyectoCopaAmerica.model.Estadio;
 import org.martin.proyectoCopaAmerica.model.Partido;
 import org.martin.proyectoCopaAmerica.model.Seleccion;
 
@@ -37,8 +39,8 @@ public class Database {
 
     public static boolean loginValido(Administrador posible) throws SQLException{
         
-        ResultSet res = Query.select("administrador", "nick = '" + posible.getNick() + 
-                "' && password = '" + posible.getPassword() + "'", "*");
+        ResultSet res = Query.select("administrador", "usuario = '" + posible.getUsuario() + 
+                "' && clave = '" + posible.getClave() + "'", "*");
         
         boolean isValido = res.next();
         res.close();
@@ -47,15 +49,15 @@ public class Database {
     
     public static void addAdmin(Administrador nuevo) throws SQLException{
         
-        if (getAdmin(nuevo.getNick()) != null) return;
+        if(getAdmin(nuevo.getUsuario()) != null) return;
         
-        Query.insert("administrador", nuevo.getNick(), nuevo.getPassword());
+        Query.insert("administrador", nuevo.getUsuario(), nuevo.getClave());
     }
 
     public static LinkedList<Administrador> getAdmins(Administrador nuevo) throws SQLException{
         
         LinkedList<Administrador> administradores = new LinkedList<>();
-        ResultSet res = Query.select("administrador", "habilitado = 1", "*");
+        ResultSet res = Query.select("administrador", null, "*");
         
         while (res.next())             
             administradores.add(new Administrador(res.getByte(1), res.getString(2), res.getString(3)));
@@ -63,10 +65,10 @@ public class Database {
         return administradores;
     }
 
-    public static Administrador getAdmin(String nick) throws SQLException{
+    public static Administrador getAdmin(String usuario) throws SQLException{
         
         Administrador resultado;
-        ResultSet res = Query.select("administrador", "nick = '" + nick + "'", "nick", "clave");
+        ResultSet res = Query.select("administrador", "usuario = '" + usuario + "'", "usuario", "clave");
         return resultado = new Administrador(res.getString(1), res.getString(2));
 //        if (con == null) {
 //            // con = new Conexion("prueba", Conexion.);
@@ -74,20 +76,57 @@ public class Database {
 //        }
     }
     
-    public static void addPartido(Partido p){
+    public static void addArbitro(Arbitro nuevo){
         
+        Query.call("prAddArbitro", nuevo.getNombre(), nuevo.getApellido(), 
+                nuevo.getEdad(), nuevo.getNacionalidad().getId());
+    }
+
+    
+    
+    public static void addPartido(Partido p){
+        Query.insert("partido", p.getFecha(), p.getLocal().getId(), p.getVisita().getId(), 
+                p.getEstadio().getId(), p.getHoraInicio(), p.getHoraTermino(), p.getCantidadAsistentes());
     }
     
-    public static LinkedList<Partido> getPartidos(){
+    public static LinkedList<Partido> getPartidos() throws SQLException{
         
         LinkedList<Partido> partidos = new LinkedList();
+        Partido p;
+        Seleccion l, v;
+        Estadio e;
+        ResultSet res = Query.select("partido", null, "*");
+        
+        while (res.next()) {            
+            
+            l = getSeleccion(res.getByte(3));
+            v = getSeleccion(res.getByte(4));
+            e = getEstadio(res.getByte(5));
+            p = new Partido(res.getShort(1), res.getString(2), l, v, e, res.getString(6), 
+                    res.getString(7), res.getInt(8));
+            
+            partidos.add(p);
+        }
         
         return partidos;
     }
     
-    public static Partido getPartido(Seleccion local, Seleccion visita){
+    public static Partido getPartido(Seleccion local, Seleccion visita, String fecha) throws SQLException{
         
-        Partido resultado = new Partido();
+        Partido resultado = null;
+        ResultSet res = Query.select("partido", "seleccionLocal = " + local.getId() + " and seleccionVisita = " + 
+                visita.getId() + " and fecha = '" + fecha + "'", "*");
+        Seleccion l, v;
+        Estadio e;
+        
+        if (res.next()) {
+            
+            l = getSeleccion(res.getByte(3));
+            v = getSeleccion(res.getByte(4));
+            e = getEstadio(res.getByte(5));
+            resultado = new Partido(res.getShort(1), res.getString(2), l, v, e, res.getString(6), 
+                    res.getString(7), res.getInt(8));
+        }
         
         return resultado;
     }

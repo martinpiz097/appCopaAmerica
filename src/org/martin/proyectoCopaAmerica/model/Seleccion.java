@@ -37,5 +37,62 @@ public class Seleccion {
         this.lugarFifa = lugarFifa;
         this.faseActual = faseActual;
     }
+
+    public byte getId() {
+        return id;
+    }
+
+    public void setId(byte id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public byte getCantJugadores() {
+        return cantJugadores;
+    }
+
+    public void setCantJugadores(byte cantJugadores) {
+        this.cantJugadores = cantJugadores;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+
+    public Pais getPais() {
+        return pais;
+    }
+
+    public void setPais(Pais pais) {
+        this.pais = pais;
+    }
+
+    public int getLugarFifa() {
+        return lugarFifa;
+    }
+
+    public void setLugarFifa(int lugarFifa) {
+        this.lugarFifa = lugarFifa;
+    }
+
+    public Fase getFaseActual() {
+        return faseActual;
+    }
+
+    public void setFaseActual(Fase faseActual) {
+        this.faseActual = faseActual;
+    }
+    
     
 }
