@@ -14,8 +14,14 @@ import java.util.logging.Logger;
 import org.martin.proyectoCopaAmerica.model.Administrador;
 import java.util.LinkedList;
 import org.martin.proyectoCopaAmerica.model.Arbitro;
+import org.martin.proyectoCopaAmerica.model.ArbitroPartido;
+import org.martin.proyectoCopaAmerica.model.CentroDeportivo;
+import org.martin.proyectoCopaAmerica.model.ClubDeportivo;
+import org.martin.proyectoCopaAmerica.model.Entrenador;
 import org.martin.proyectoCopaAmerica.model.Estadio;
+import org.martin.proyectoCopaAmerica.model.Pais;
 import org.martin.proyectoCopaAmerica.model.Partido;
+import org.martin.proyectoCopaAmerica.model.Posicion;
 import org.martin.proyectoCopaAmerica.model.Seleccion;
 
 /**
@@ -50,8 +56,8 @@ public class Database {
     public static void addAdmin(Administrador nuevo) throws SQLException{
         
         if(getAdmin(nuevo.getUsuario()) != null) return;
-        
-        Query.insert("administrador", nuevo.getUsuario(), nuevo.getClave());
+
+        Query.call("prAddAdmin", nuevo.getUsuario(), nuevo.getClave());
     }
 
     public static LinkedList<Administrador> getAdmins(Administrador nuevo) throws SQLException{
@@ -82,7 +88,118 @@ public class Database {
                 nuevo.getEdad(), nuevo.getNacionalidad().getId());
     }
 
+    public static LinkedList<Arbitro> getArbitros() throws SQLException{
+        LinkedList<Arbitro> listadoArbitros = new LinkedList<>();
+        Arbitro a;
+        Pais p;
+        ResultSet res = Query.select("arbitro", null, "*");
+        
+        while (res.next()) {            
+            p = getPais(res.getByte(5));
+            a = new Arbitro(res.getByte(1), res.getString(2), res.getString(3), res.getByte(4), p);
+        }
+        
+        return listadoArbitros;
+    }
+
+    public static void addArbitroToPartido(ArbitroPartido ap){
+        
+        Query.call("prAddArbitroPartido", ap.getPartido().getId(), 
+                ap.getArbitro().getId(), ap.getPosicion().getId());
+    }
     
+    public static LinkedList<ArbitroPartido> getArbitrosFromPartido(Partido partido) throws SQLException{
+        
+        LinkedList<ArbitroPartido> listaArbPar = new LinkedList<>();
+        ArbitroPartido ap;
+        Arbitro a;
+        Partido p = null;
+        Posicion pos;
+        ResultSet res = Query.select("arbitroPartido", "idPartido = " + partido.getId(), "*");
+            
+        while (res.next()) {
+            p = getPartido(res.getShort(2));
+            a = getArbitro(res.getShort(3));
+            pos = getPosicion(res.getByte(4));
+            ap = new ArbitroPartido(res.getShort(1), p, a, pos);
+            listaArbPar.add(ap);
+        }
+        return listaArbPar;
+    }
+    
+    public static LinkedList<ArbitroPartido> getArbitrosPartidos() throws SQLException{
+        
+        LinkedList<ArbitroPartido> listaArbPar = new LinkedList<>();
+        ArbitroPartido ap;
+        Arbitro a;
+        Partido p;
+        Posicion pos;
+        ResultSet res = Query.select("arbitroPartido", null, "*");
+            
+        while (res.next()) {
+            p = getPartido(res.getShort(2));
+            a = getArbitro(res.getShort(3));
+            pos = getPosicion(res.getByte(4));
+            ap = new ArbitroPartido(res.getShort(1), p, a, pos);
+            listaArbPar.add(ap);
+        }
+        return listaArbPar;
+    }
+
+    public static void addCentroDeportivo(CentroDeportivo cd){
+        Query.call("prAddCentroDeportivo", cd.getNombre(), cd.getSeleccion().getId(), cd.getDireccion());
+    }
+    
+    public static LinkedList<CentroDeportivo> getCentrosDeportivos() throws SQLException{
+        
+        LinkedList<CentroDeportivo> centros = new LinkedList<>();
+        CentroDeportivo cd;
+        Seleccion s;
+        ResultSet res = Query.select("centroDeportivo", null, "*");
+        
+        while (res.next()) {            
+            s = getSeleccion(res.getByte(3));
+            cd = new CentroDeportivo(res.getByte(1), res.getString(2), s, res.getString(4));
+            centros.add(cd);
+        }
+        
+        return centros;
+    }
+    
+    public static void addClubDeportivo(ClubDeportivo club){
+        Query.call("prAddClub", club.getNombre());
+    }
+
+    public static ClubDeportivo getClub(String nombre) throws SQLException{
+        return getClubes().stream().filter((c) -> c.getNombre().equalsIgnoreCase(nombre)).findFirst().get();
+    } 
+    
+    public static LinkedList<ClubDeportivo> getClubes() throws SQLException{
+        
+        LinkedList<ClubDeportivo> clubes = new LinkedList<>();
+        ClubDeportivo cd;
+        ResultSet res = Query.select("clubDeportivo", null, "*");
+        
+        while (res.next()) {
+            cd = new ClubDeportivo(res.getByte(1), res.getString(2));
+            clubes.add(cd);
+        }
+        return clubes;
+    }
+    
+    public static void addEntrenador(Entrenador e){
+        
+        Query.call("prAddEntrenador", e.getRol().getId(), e.getSeleccion().getId(), e.getPrimerNombre(), 
+                e.getSegundoNombre(), e.getPrimerApellido(), e.getSegundoApellido(), e.getEdad(), 
+                e.getNacionalidad().getId(), e.getSueldo());
+        
+    }
+    
+    public static LinkedList<Entrenador> getEntrenadores(){
+        
+        LinkedList<Entrenador> entrenadores = new LinkedList<>();
+        
+    }
     
     public static void addPartido(Partido p){
         Query.insert("partido", p.getFecha(), p.getLocal().getId(), p.getVisita().getId(), 

@@ -503,3 +503,8 @@ begin
 	insert into seleccion values(null, _nombre, _cantJugad, _estado, 
 								_pais, _lugarFifa, _faseActual);
 end //
+
+create procedure prAddAdmin(in _user varchar(20), in _clave varchar(40))
+begin
+	insert into administrador values(null, _user, MD5(_clave));
+end //

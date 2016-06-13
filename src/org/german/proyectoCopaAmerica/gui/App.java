@@ -52,27 +52,47 @@ public class App extends javax.swing.JFrame {
 
         jPanel1.setLayout(new java.awt.GridLayout(2, 2));
 
-        btnJugador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rescourse/jugador.png"))); // NOI18N
+        btnJugador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/german/proyectoCopaAmerica/resources/jugador.png"))); // NOI18N
+        btnJugador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnJugadorActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnJugador);
 
-        btnSeleccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rescourse/seleccion.png"))); // NOI18N
+        btnSeleccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/german/proyectoCopaAmerica/resources/seleccion.png"))); // NOI18N
+        btnSeleccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnSeleccion);
 
-        btnPartidos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rescourse/partido.png"))); // NOI18N
+        btnPartidos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/german/proyectoCopaAmerica/resources/partido.png"))); // NOI18N
+        btnPartidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPartidosActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnPartidos);
 
         btnRandom.setText("random");
+        btnRandom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRandomActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnRandom);
 
         javax.swing.GroupLayout frSoftwareLayout = new javax.swing.GroupLayout(frSoftware.getContentPane());
         frSoftware.getContentPane().setLayout(frSoftwareLayout);
         frSoftwareLayout.setHorizontalGroup(
             frSoftwareLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         frSoftwareLayout.setVerticalGroup(
             frSoftwareLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -141,6 +161,22 @@ public class App extends javax.swing.JFrame {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_bttnEnviarActionPerformed
+
+    private void btnJugadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugadorActionPerformed
+
+    }//GEN-LAST:event_btnJugadorActionPerformed
+
+    private void btnSeleccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionActionPerformed
+
+    }//GEN-LAST:event_btnSeleccionActionPerformed
+
+    private void btnPartidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPartidosActionPerformed
+
+    }//GEN-LAST:event_btnPartidosActionPerformed
+
+    private void btnRandomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRandomActionPerformed
+
+    }//GEN-LAST:event_btnRandomActionPerformed
 
     /**
      * @param args the command line arguments
