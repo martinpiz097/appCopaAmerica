@@ -11,13 +11,13 @@ package org.martin.proyectoCopaAmerica.model;
  */
 public class Arbitro {
 
-    private byte id;
+    private short id;
     private String nombre;
     private String apellido;
     private byte edad;
     private Pais nacionalidad;
 
-    public Arbitro(byte id, String nombre, String apellido, byte edad, Pais nacionalidad) {
+    public Arbitro(short id, String nombre, String apellido, byte edad, Pais nacionalidad) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -32,7 +32,7 @@ public class Arbitro {
         this.nacionalidad = nacionalidad;
     }
 
-    public byte getId() {
+    public short getId() {
         return id;
     }
 

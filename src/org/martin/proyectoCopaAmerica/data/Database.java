@@ -19,9 +19,12 @@ import org.martin.proyectoCopaAmerica.model.CentroDeportivo;
 import org.martin.proyectoCopaAmerica.model.ClubDeportivo;
 import org.martin.proyectoCopaAmerica.model.Entrenador;
 import org.martin.proyectoCopaAmerica.model.Estadio;
+import org.martin.proyectoCopaAmerica.model.Estado;
+import org.martin.proyectoCopaAmerica.model.Fase;
 import org.martin.proyectoCopaAmerica.model.Pais;
 import org.martin.proyectoCopaAmerica.model.Partido;
 import org.martin.proyectoCopaAmerica.model.Posicion;
+import org.martin.proyectoCopaAmerica.model.Rol;
 import org.martin.proyectoCopaAmerica.model.Seleccion;
 
 /**
@@ -46,7 +49,7 @@ public class Database {
     public static boolean loginValido(Administrador posible) throws SQLException{
         
         ResultSet res = Query.select("administrador", "usuario = '" + posible.getUsuario() + 
-                "' && clave = '" + posible.getClave() + "'", "*");
+                "' && clave = md5(" + posible.getClave() + ")", "*");
         
         boolean isValido = res.next();
         res.close();
@@ -88,6 +91,20 @@ public class Database {
                 nuevo.getEdad(), nuevo.getNacionalidad().getId());
     }
 
+    public static Arbitro getArbitro(short id) throws SQLException{
+        
+        ResultSet res = Query.select("arbitro", "id = " + id, "*");
+        Arbitro a = null;
+        Pais nacionalidad;
+        
+        if (res.next()) {
+            nacionalidad = getPais(res.getByte(5));
+            a = new Arbitro(id, res.getString(2), res.getString(3), res.getByte(4), nacionalidad);
+        }
+        res.close();
+        return a;
+    }
+    
     public static LinkedList<Arbitro> getArbitros() throws SQLException{
         LinkedList<Arbitro> listadoArbitros = new LinkedList<>();
         Arbitro a;
@@ -195,15 +212,234 @@ public class Database {
         
     }
     
-    public static LinkedList<Entrenador> getEntrenadores(){
+    public static LinkedList<Entrenador> getEntrenadores() throws SQLException{
         
         LinkedList<Entrenador> entrenadores = new LinkedList<>();
+        Entrenador e;
+        Rol rol = null;
+        Seleccion seleccion = null;
+        Pais pais = null;
         
+        ResultSet res = Query.select("entrenador", null, "*");
+        
+        while (res.next()) {
+            
+            rol = getRol(res.getByte(2));
+            seleccion = getSeleccion(res.getByte(3));
+            pais = getPais(res.getByte(9));
+            e = new Entrenador(res.getByte(1), rol, seleccion, res.getString(4), 
+                    res.getString(5), res.getString(6), res.getString(7), 
+                    res.getByte(8), pais, res.getLong(10));
+            entrenadores.add(e);
+        }
+        
+        res.close();
+        return entrenadores;
     }
     
     public static void addPartido(Partido p){
         Query.insert("partido", p.getFecha(), p.getLocal().getId(), p.getVisita().getId(), 
                 p.getEstadio().getId(), p.getHoraInicio(), p.getHoraTermino(), p.getCantidadAsistentes());
+    }
+    
+    public static void addEstadio(Estadio e){
+        
+        Query.call("prAddEstadio", e.getNombre());
+    }
+    
+    public static Estadio getEstadio(byte id) throws SQLException{
+        
+        Estadio e = null;
+        ResultSet res = Query.select("estadio", "id = " + id, "nombre");
+    
+        if (res.next()) e = new Estadio(id, res.getString(1));
+        
+        return e;
+    }
+    
+    public static LinkedList<Estadio> getEstadios() throws SQLException{
+        
+        LinkedList<Estadio> estadios = new LinkedList<>();
+        Estadio e;
+        ResultSet res = Query.select("estadio", null, "*");
+        
+        while (res.next()){
+            e = new Estadio(res.getByte(1), res.getString(2));
+            estadios.add(e);
+        }
+        
+        return estadios;
+        
+    }
+    
+    public static void addEstado(Estado e){
+        
+        Query.call("prAddEstado", e.getNombre());
+    }
+    
+    public static Estado getEstado(byte id) throws SQLException{
+        
+        Estado e = null;
+        ResultSet res = Query.select("estado", "id = " + id, "nombre");
+    
+        if (res.next()) e = new Estado(id, res.getString(1));
+        
+        return e;
+    }
+    
+    public static LinkedList<Estado> getEstados() throws SQLException{
+        
+        LinkedList<Estado> estados = new LinkedList<>();
+        Estado e;
+        ResultSet res = Query.select("estado", null, "*");
+        
+        while (res.next()){
+            e = new Estado(res.getByte(1), res.getString(2));
+            estados.add(e);
+        }
+        
+        return estados;
+        
+    }
+    
+    public static void addFase(Fase f){
+        
+        Query.call("prAddFase", f.getNombre());
+    }
+    
+    public static Fase getFase(byte id) throws SQLException{
+        
+        Fase f = null;
+        ResultSet res = Query.select("fase", "id = " + id, "nombre");
+    
+        if (res.next()) f = new Fase(id, res.getString(1));
+        
+        return f;
+    }
+    
+    public static LinkedList<Fase> getFases() throws SQLException{
+        
+        LinkedList<Fase> fases = new LinkedList<>();
+        Fase f;
+        ResultSet res = Query.select("fase", null, "*");
+        
+        while (res.next()){
+            f = new Fase(res.getByte(1), res.getString(2));
+            fases.add(f);
+        }
+        
+        return fases;
+        
+    }
+    
+    
+    public static void addPais(Pais p){
+        
+        Query.call("prAddPais", p.getNombre());
+    }
+    
+    public static Pais getPais(byte id) throws SQLException{
+        
+        Pais p = null;
+        ResultSet res = Query.select("pais", "id = " + id, "nombre");
+    
+        if (res.next()) p = new Pais(id, res.getString(1));
+        
+        return p;
+    }
+    
+    public static LinkedList<Pais> getPaises() throws SQLException{
+        
+        LinkedList<Pais> paises = new LinkedList<>();
+        Pais p;
+        ResultSet res = Query.select("pais", null, "*");
+        
+        while (res.next()){
+            p = new Pais(res.getByte(1), res.getString(2));
+            paises.add(p);
+        }
+        
+        return paises;
+        
+    }
+    
+    public static void addRol(Rol r){
+        
+        Query.call("prAddRol", r.getNombre());
+    }
+    
+    public static Rol getRol(byte id) throws SQLException{
+        
+        Rol r = null;
+        ResultSet res = Query.select("rol", "id = " + id, "nombre");
+    
+        if (res.next()) r = new Rol(id, res.getString(1));
+        
+        return r;
+    }
+    
+    public static LinkedList<Rol> getRoles() throws SQLException{
+        
+        LinkedList<Rol> roles = new LinkedList<>();
+        Rol r;
+        ResultSet res = Query.select("rol", null, "*");
+        
+        while (res.next()){
+            r = new Rol(res.getByte(1), res.getString(2));
+            roles.add(r);
+        }
+        
+        return roles;
+        
+    }
+    
+    public static void addPosicion(Posicion p){
+        
+        Query.call("prAddPosicion", p.getNombre());
+    }
+    
+    public static Posicion getPosicion(byte id) throws SQLException{
+        
+        Posicion p = null;
+        ResultSet res = Query.select("posicion", "id = " + id, "nombre");
+    
+        if (res.next()) p = new Posicion(id, res.getString(1));
+        
+        return p;
+    }
+    
+    public static LinkedList<Posicion> getPosiciones() throws SQLException{
+        
+        LinkedList<Posicion> posiciones = new LinkedList<>();
+        Posicion p;
+        ResultSet res = Query.select("posicion", null, "*");
+        
+        while (res.next()){
+            p = new Posicion(res.getByte(1), res.getString(2));
+            posiciones.add(p);
+        }
+        
+        return posiciones;
+        
+    }
+    
+    public static Partido getPartido(short id) throws SQLException{
+        
+        ResultSet res = Query.select("partido", "id = " + id, "*");
+        Partido resultado = null;
+        Seleccion local;
+        Seleccion visita;
+        Estadio estadio;
+        
+        if (res.next()) {
+            local = getSeleccion(res.getByte(3));
+            visita = getSeleccion(res.getByte(4));
+            estadio = getEstadio(res.getByte(5));
+            resultado = new Partido(id, res.getString(2), local, visita, estadio, 
+                    res.getString(6), res.getString(7), res.getInt(8));
+            
+        }
+        return resultado;
     }
     
     public static LinkedList<Partido> getPartidos() throws SQLException{
@@ -252,15 +488,40 @@ public class Database {
         
     }
     
+    public static Seleccion getSeleccion(byte id) throws SQLException{
+        
+        ResultSet res = Query.select("seleccion", "id = " + id, "*");
+        Seleccion s = null;
+        Estado estado;
+        Pais pais;
+        Fase fase;
+        
+        if(res.next()) {
+            estado = getEstado(res.getByte(4));
+            pais = getPais(res.getByte(5));
+            fase = getFase(res.getByte(7));
+            s = new Seleccion(id, res.getString(2), res.getByte(3), estado, pais, res.getInt(6), fase);
+        }
+        
+        res.close();
+        return s;
+    }
+    
     public static LinkedList<Seleccion> getSelecciones() throws SQLException{
         
         LinkedList<Seleccion> selecciones = new LinkedList<>();
         ResultSet res = Query.select("seleccion", null, "*");
-        Seleccion s = new Seleccion();
+        Seleccion s;
+        Estado estado;
+        Pais pais;
+        Fase fase;
         
-        while (res.next()) {            
-            
-            
+        while (res.next()) {
+            estado = getEstado(res.getByte(4));
+            pais = getPais(res.getByte(5));
+            fase = getFase(res.getByte(7));
+            s = new Seleccion(res.getByte(1), res.getString(2), res.getByte(3), estado, pais, res.getInt(6), fase);
+            selecciones.add(s);
         }
         
         return selecciones;

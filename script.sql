@@ -321,7 +321,7 @@ create table administrador (
     clave varchar(40)
 );
 
-insert into administrador values(null, 'admin', MD5('1234'));
+insert into administrador values(null, 'admin', '1234');
 
 delimiter //
 
@@ -453,8 +453,7 @@ in _habilitado bit
 )
 
 begin
-	insert into j
-values(
+	insert into jugador values(
 _priNom,
 _segNom,
 _priApe,
@@ -503,3 +502,10 @@ begin
 	insert into seleccion values(null, _nombre, _cantJugad, _estado, 
 								_pais, _lugarFifa, _faseActual);
 end //
+
+create procedure prAddAdmin(in _user varchar(20), in _clave varchar(40))
+begin
+	insert into administrador values(null, _user, _clave);
+end //
+
+delimiter ;
